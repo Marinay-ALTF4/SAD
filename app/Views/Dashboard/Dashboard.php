@@ -10,12 +10,12 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2> CoffeeDash</h2>
-        <a href="#">Dashboard</a>
-        <a href="#">Orders</a>
-        <a href="#">Products</a>
-        <a href="#">Customers</a>
-        <a href="#">Reports</a>
+        <h2>Welcome, <?= session()->get('username')?>☕</h2>
+        <a href="<?= base_url('dashboard') ?>" class="active">Dashboard</a>
+        <a href="<?= base_url('orders') ?>">Orders</a>
+        <a href="<?= base_url('product') ?>">Products</a>
+        <a href="<?= base_url('expenses') ?>">Expenses</a>
+        <a href="<?= base_url('reports') ?>">Reports</a>
         <a href="<?= base_url('settings') ?>">Settings</a>
         <a href="<?= base_url('logout') ?>">Logout</a>
     </div>
@@ -99,7 +99,7 @@
     .sidebar {
         width: 250px;
         height: 100vh;
-        background-color: #8b5e3c; /* Coffee brown */
+        background-color: #8b5e3c;
         padding: 20px;
         position: fixed;
         top: 0;
@@ -107,29 +107,34 @@
         color: white;
     }
 
+    .sidebar a.active {
+        color: #fff7ef;
+        background-color: #7a4e2a;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
     .sidebar h2 {
         font-weight: 700;
         margin-bottom: 35px;
     }
 
-    /* Each link as a box */
     .sidebar a {
         color: #f3e5d8;
         text-decoration: none;
         display: block;
         padding: 14px 15px;
         font-size: 1.1rem;
-        margin-bottom: 20px;             /* Increased space between links */
-        border: 1px solid #5a3825;      /* Dark brown border */
-        border-radius: 10px;             /* Rounded corners */
-        background-color: #9b6b4a;       /* Slightly lighter coffee shade */
-        transition: all 0.3s ease;       /* Smooth hover effect */
+        margin-bottom: 20px;
+        border: 1px solid #5a3825;
+        border-radius: 10px;
+        background-color: #9b6b4a;
+        transition: all 0.3s ease;
     }
 
     .sidebar a:hover {
         color: #fff7ef;
-        background-color: #7a4e2a;       /* Darker shade on hover */
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Hover shadow */
+        background-color: #7a4e2a;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     /* Main content */
@@ -150,4 +155,5 @@
         color: #5a3825;
         font-weight: 700;
     }
+    
 </style>

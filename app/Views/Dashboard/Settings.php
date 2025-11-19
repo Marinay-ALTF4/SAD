@@ -6,100 +6,19 @@
     <title>Coffee Shop Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <style>
-        /* --- General Styles --- */
-        body {
-            background-color: #f3e5d8;
-            font-family: 'Poppins', sans-serif;
-        }
 
-        /* --- Sidebar --- */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #8b5e3c;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            color: white;
-        }
-
-        .sidebar h2 {
-            font-weight: 700;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            color: #f3e5d8;
-            text-decoration: none;
-            display: block;
-            padding: 14px 15px;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            border: 1px solid #5a3825;
-            border-radius: 10px;
-            background-color: #9b6b4a;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar a:hover {
-            color: #fff7ef;
-            background-color: #7a4e2a;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        /* --- Main Content --- */
-        .content {
-            margin-left: 270px;
-            padding: 30px;
-        }
-
-        /* --- Cards --- */
-        .card-custom {
-            border-radius: 15px;
-            border: 1px solid #d8bfa7;
-            background-color: #fff7ef;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .title {
-            color: #5a3825;
-            font-weight: 700;
-        }
-
-        .form-label {
-            color: #5a3825;
-            font-weight: 500;
-        }
-
-        .btn-brown {
-            background-color: #8b5e3c;
-            color: white;
-        }
-
-        .btn-brown:hover {
-            background-color: #6e462c;
-        }
-
-        /* --- Tables --- */
-        .table thead th {
-            background-color: #f3e5d8;
-            color: #5a3825;
-        }
-    </style>
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2>CoffeeDash</h2>
-        <a href="<?= base_url('dashboard') ?>">Dashboard</a>
-        <a href="#">Orders</a>
-        <a href="#">Products</a>
-        <a href="#">Customers</a>
-        <a href="#">Reports</a>
-        <a href="<?= base_url('settings') ?>">Settings</a>
+    <h2>Welcome, <?= session()->get('username')?>☕</h2>
+            <a href="<?= base_url('dashboard') ?>">Dashboard</a>
+        <a href="<?= base_url('orders') ?>">Orders</a>
+        <a href="<?= base_url('product') ?>">Products</a>
+        <a href="<?= base_url('expenses') ?>">Expenses</a>
+        <a href="<?= base_url('reports') ?>">Reports</a>
+        <a href="<?= base_url('settings') ?>" class="active">Settings</a>
         <a href="<?= base_url('logout') ?>">Logout</a>
     </div>
 
@@ -262,3 +181,90 @@
 
 </body>
 </html>
+<style>
+        /* --- General Styles --- */
+        body {
+            background-color: #f3e5d8;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #8b5e3c;
+        padding: 20px;
+        position: fixed;
+        top: 0; left: 0; color: white;
+        left: 0;
+        color: white;
+    }
+
+    .sidebar a.active {
+        color: #fff7ef;
+        background-color: #7a4e2a;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .sidebar h2 {
+        font-weight: 700;
+        margin-bottom: 35px;
+    }
+
+    .sidebar a {
+        color: #f3e5d8;
+        text-decoration: none;
+        display: block;
+        padding: 14px 15px;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        border: 1px solid #5a3825;
+        border-radius: 10px;
+        background-color: #9b6b4a;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+        color: #fff7ef;
+        background-color: #7a4e2a;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+        /* --- Main Content --- */
+        .content {
+            margin-left: 270px;
+            padding: 30px;
+        }
+
+        /* --- Cards --- */
+        .card-custom {
+            border-radius: 15px;
+            border: 1px solid #d8bfa7;
+            background-color: #fff7ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            color: #5a3825;
+            font-weight: 700;
+        }
+
+        .form-label {
+            color: #5a3825;
+            font-weight: 500;
+        }
+
+        .btn-brown {
+            background-color: #8b5e3c;
+            color: white;
+        }
+
+        .btn-brown:hover {
+            background-color: #6e462c;
+        }
+
+        /* --- Tables --- */
+        .table thead th {
+            background-color: #f3e5d8;
+            color: #5a3825;
+        }
+    </style>
