@@ -20,16 +20,16 @@ class Auth extends BaseController
 
     public function login()
     {
-        $email = $this->request->getPost('email');
+        $identity = $this->request->getPost('login_identity');
         $password = $this->request->getPost('password');
 
         // Validate input
-        if (empty($email) || empty($password)) {
-            return redirect()->back()->with('error', 'Email and password are required');
+        if (empty($identity) || empty($password)) {
+            return redirect()->back()->with('error', 'Email/Username and password are required');
         }
 
         // Verify user credentials from database
-        $user = $this->userModel->verifyUser($email, $password);
+        $user = $this->userModel->verifyUser($identity, $password);
 
         if ($user) {
             // Set session data
@@ -44,7 +44,7 @@ class Auth extends BaseController
             return redirect()->to('/dashboard');
         }
 
-        return redirect()->back()->with('error', 'Invalid email or password');
+        return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
     }
 
     public function logout()

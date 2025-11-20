@@ -23,8 +23,8 @@
             <?php endif; ?>
 
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required />
+                <label for="login_identity" class="form-label">Email or Username</label>
+                <input type="text" class="form-control" id="login_identity" name="login_identity" placeholder="Enter email or username" required />
             </div>
 
             <div class="mb-3">

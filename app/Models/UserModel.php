@@ -23,14 +23,18 @@ class UserModel extends Model
     /**
      * Verify user credentials
      */
-    public function verifyUser(string $email, string $password)
+    public function verifyUser(string $identity, string $password)
     {
-        $user = $this->where('email', $email)->first();
-        
+        $user = $this->groupStart()
+                ->where('email', $identity)
+                ->orWhere('username', $identity)
+            ->groupEnd()
+            ->first();
+
         if ($user && password_verify($password, $user['password'])) {
             return $user;
         }
-        
+
         return false;
     }
 }
