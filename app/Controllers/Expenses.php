@@ -5,58 +5,109 @@ use App\Models\ExpenseModel;
 
 class Expenses extends BaseController
 {
-    protected $expenseModel;
+    protected ExpenseModel $expenses;
+
+    private array $categories = [
+        'Ingredients',
+        'Utilities',
+        'Rent',
+        'Salaries',
+        'Maintenance',
+        'Marketing',
+        'Miscellaneous',
+    ];
 
     public function __construct()
     {
-        $this->expenseModel = new ExpenseModel();
+        $this->expenses = new ExpenseModel();
     }
 
-    // List all expenses
     public function index()
     {
-        $data['expenses'] = $this->expenseModel->orderBy('date', 'DESC')->findAll();
-        $data['total_expenses'] = $this->expenseModel->selectSum('amount')->first()['amount'] ?? 0;
+        $records = $this->expenses->orderBy('date', 'DESC')->findAll();
+        $total   = array_reduce($records, static fn ($carry, $row) => $carry + (float) $row['amount'], 0);
+
+        $data = [
+            'expenses'   => $records,
+            'categories' => $this->categories,
+            'stats'      => [
+                'today'  => $this->expenses->sumForDate(date('Y-m-d')),
+                'month'  => $this->expenses->sumForMonth(date('Y-m')),
+                'count'  => count($records),
+                'total'  => $total,
+            ],
+        ];
+
         return view('Dashboard/Expenses', $data);
     }
 
-    // Add a new expense
-    public function add()
+    public function store()
     {
-        $this->expenseModel->save([
-            'date' => $this->request->getPost('date'),
-            'category' => $this->request->getPost('category'),
-            'description' => $this->request->getPost('description'),
-            'amount' => $this->request->getPost('amount'),
-        ]);
+        [$payload, $error] = $this->extractPayload();
 
-        return redirect()->to(base_url('expenses'));
+        if ($error) {
+            return redirect()->back()->withInput()->with('error', $error);
+        }
+
+        $this->expenses->insert($payload);
+
+        return redirect()->to('/expenses')->with('success', 'Expense recorded.');
     }
 
-    // Edit an expense
-    public function edit($id)
-    {
-        $data['expense'] = $this->expenseModel->find($id);
-        return view('Dashboard/Expenses', $data);
-    }
-
-    // Update an expense
     public function update($id)
     {
-        $this->expenseModel->update($id, [
-            'date' => $this->request->getPost('date'),
-            'category' => $this->request->getPost('category'),
-            'description' => $this->request->getPost('description'),
-            'amount' => $this->request->getPost('amount'),
-        ]);
+        $expense = $this->expenses->find($id);
 
-        return redirect()->to(base_url('expenses'));
+        if (! $expense) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Expense not found.');
+        }
+
+        [$payload, $error] = $this->extractPayload();
+
+        if ($error) {
+            return redirect()->back()->withInput()->with('error', $error);
+        }
+
+        $this->expenses->update($id, $payload);
+
+        return redirect()->to('/expenses')->with('success', 'Expense updated.');
     }
 
-    // Delete an expense
     public function delete($id)
     {
-        $this->expenseModel->delete($id);
-        return redirect()->to(base_url('expenses'));
+        $this->expenses->delete($id);
+
+        return redirect()->to('/expenses')->with('success', 'Expense removed.');
+    }
+
+    private function extractPayload(): array
+    {
+        $date        = $this->request->getPost('date');
+        $category    = $this->request->getPost('category');
+        $description = trim((string) $this->request->getPost('description'));
+        $amount      = (float) $this->request->getPost('amount');
+
+        if (! $date) {
+            return [null, 'Please select a date.'];
+        }
+
+        if (! in_array($category, $this->categories, true)) {
+            return [null, 'Choose a valid category.'];
+        }
+
+        if ($description === '') {
+            return [null, 'Description is required.'];
+        }
+
+        if ($amount <= 0) {
+            return [null, 'Amount must be greater than zero.'];
+        }
+
+        return [[
+            'date'        => $date,
+            'category'    => $category,
+            'description' => $description,
+            'amount'      => round($amount, 2),
+        ], null];
     }
 }
