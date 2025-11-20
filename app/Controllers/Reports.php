@@ -3,35 +3,67 @@
 namespace App\Controllers;
 
 use App\Models\OrderModel;
-use App\Models\ProductModel;
 
 class Reports extends BaseController
 {
     public function index()
     {
-        $orderModel = new OrderModel();
-        $productModel = new ProductModel();
+        $orders = new OrderModel();
 
-        // Summary Cards
-        $data['total_sales_today'] = $orderModel->totalSalesToday();
-        $data['total_orders'] = $orderModel->countAllResults();
-        $data['pending_orders'] = $orderModel->countOrdersByStatus('Pending');
-        $data['completed_orders'] = $orderModel->countOrdersByStatus('Completed');
-        $data['new_customers'] = 12; // Replace with CustomerModel if available
+        $today        = date('Y-m-d');
+        $startOfWeek  = date('Y-m-d', strtotime('monday this week'));
+        $startOfMonth = date('Y-m-01');
+        $endOfMonth   = date('Y-m-t');
 
-        // Recent Orders Table
-        $data['recent_orders'] = $orderModel->getRecentOrders(5);
+        $weeklySales      = $orders->sumBetweenDates($startOfWeek, $today);
+        $monthlySales     = $orders->sumBetweenDates($startOfMonth, $endOfMonth);
+        $previousWeekFrom = date('Y-m-d', strtotime($startOfWeek . ' -7 days'));
+        $previousWeekTo   = date('Y-m-d', strtotime($startOfWeek . ' -1 day'));
+        $previousWeekSales = $orders->sumBetweenDates($previousWeekFrom, $previousWeekTo);
 
-        // Top Products Table
-        $data['top_products'] = $productModel->getTopProducts(5);
+        $dailySeries   = $orders->getDailySalesSeries(7);
+        $monthlySeries = $orders->getMonthlySalesSeries(6);
+        $topItems      = $orders->getTopItems(5);
 
-        // Charts Data (example)
-        $data['daily_sales_labels'] = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; // placeholder
-        $data['daily_sales_data'] = [300,500,400,600,450,700,650]; // replace with dynamic data
-
-        $data['top_products_labels'] = array_map(fn($p)=>$p['name'], $data['top_products']);
-        $data['top_products_data'] = array_map(fn($p)=>$p['total_sold'],$data['top_products']);
+        $data = [
+            'total_sales_today' => $orders->totalSalesByDate($today),
+            'weekly_sales'      => $weeklySales,
+            'monthly_sales'     => $monthlySales,
+            'total_orders'      => $orders->countAll(),
+            'pending_orders'    => $orders->countOrdersByStatus('Pending'),
+            'completed_orders'  => $orders->countOrdersByStatus('Completed'),
+            'weekly_orders'     => $orders->countOrdersBetweenDates($startOfWeek, $today),
+            'monthly_orders'    => $orders->countOrdersBetweenDates($startOfMonth, $endOfMonth),
+            'recent_orders'     => $orders->getRecentOrders(5),
+            'daily_sales'       => $dailySeries,
+            'monthly_sales_chart' => $monthlySeries,
+            'top_items'         => $topItems,
+            'recommendation'    => $this->buildRecommendation($weeklySales, $previousWeekSales, $topItems),
+        ];
 
         return view('Dashboard/Reports', $data);
+    }
+
+    private function buildRecommendation(float $currentWeek, float $previousWeek, array $topItems): string
+    {
+        $trend = $previousWeek > 0
+            ? (($currentWeek - $previousWeek) / $previousWeek) * 100
+            : 100;
+
+        $leader = $topItems[0]['name'] ?? null;
+
+        if ($trend >= 5) {
+            $message = 'Great job! Weekly sales are up ' . number_format($trend, 1) . '%. Keep pushing your best-sellers';
+        } elseif ($trend <= -5) {
+            $message = 'Weekly sales dipped ' . number_format(abs($trend), 1) . '%. Consider promoting bundles or spotlighting popular drinks during rush hours.';
+        } else {
+            $message = 'Weekly sales are steady. Test limited promos to spark additional growth.';
+        }
+
+        if ($leader) {
+            $message .= " Top pick: {$leader}. Try upselling it with pastries or loyalty perks.";
+        }
+
+        return $message;
     }
 }

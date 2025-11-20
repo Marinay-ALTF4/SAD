@@ -79,4 +79,89 @@ class OrderModel extends Model
             ->limit($limit)
             ->findAll();
     }
+
+    public function sumBetweenDates(string $startDate, string $endDate): float
+    {
+        $result = $this->selectSum('total')
+            ->where('status', 'Completed')
+            ->where('order_date >=', $startDate . ' 00:00:00')
+            ->where('order_date <=', $endDate . ' 23:59:59')
+            ->first();
+
+        return (float) ($result['total'] ?? 0);
+    }
+
+    public function countOrdersBetweenDates(string $startDate, string $endDate): int
+    {
+        return $this->where('order_date >=', $startDate . ' 00:00:00')
+            ->where('order_date <=', $endDate . ' 23:59:59')
+            ->countAllResults();
+    }
+
+    public function getDailySalesSeries(int $days = 7): array
+    {
+        $labels = [];
+        $data   = [];
+
+        for ($i = $days - 1; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-{$i} days"));
+            $labels[] = date('M d', strtotime($date));
+            $data[]   = $this->totalSalesByDate($date);
+        }
+
+        return ['labels' => $labels, 'data' => $data];
+    }
+
+    public function getMonthlySalesSeries(int $months = 6): array
+    {
+        $labels = [];
+        $data   = [];
+
+        for ($i = $months - 1; $i >= 0; $i--) {
+            $monthDate = date('Y-m-01', strtotime("-{$i} months"));
+            $start = date('Y-m-01', strtotime($monthDate));
+            $end   = date('Y-m-t', strtotime($monthDate));
+
+            $labels[] = date('M Y', strtotime($monthDate));
+            $data[]   = $this->sumBetweenDates($start, $end);
+        }
+
+        return ['labels' => $labels, 'data' => $data];
+    }
+
+    public function getTopItems(int $limit = 5): array
+    {
+        $orders = $this->where('status', 'Completed')->findAll();
+        $totals = [];
+
+        foreach ($orders as $order) {
+            $items = json_decode($order['items'], true) ?? [];
+            foreach ($items as $item) {
+                if (! isset($item['name'])) {
+                    continue;
+                }
+
+                $name = $item['name'];
+                $qty = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+                $price = isset($item['price']) ? (float) $item['price'] : 0;
+
+                if (! isset($totals[$name])) {
+                    $totals[$name] = [
+                        'name'     => $name,
+                        'quantity' => 0,
+                        'revenue'  => 0,
+                    ];
+                }
+
+                $totals[$name]['quantity'] += $qty;
+                $totals[$name]['revenue']  += $price * $qty;
+            }
+        }
+
+        usort($totals, static function ($a, $b) {
+            return $b['revenue'] <=> $a['revenue'];
+        });
+
+        return array_slice(array_values($totals), 0, $limit);
+    }
 }
