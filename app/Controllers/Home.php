@@ -2,11 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Models\OrderModel;
+
 class Home extends BaseController
 {
     public function index(): string
     {
-        return view('Dashboard/Dashboard');
-    }
+        $orders = new OrderModel();
 
+        $data = [
+            'todaySales'   => $orders->totalSalesByDate(),
+            'totalOrders'  => $orders->countAll(),
+            'newCustomers' => $orders->countNewCustomersByDate(),
+            'recentOrders' => $orders->getRecentOrders(),
+        ];
+
+        return view('Dashboard/Dashboard', $data);
+    }
 }

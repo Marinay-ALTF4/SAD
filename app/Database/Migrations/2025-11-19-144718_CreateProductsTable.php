@@ -30,6 +30,11 @@ class CreateProductsTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '50',
             ],
+            'best_seller' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 0,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,

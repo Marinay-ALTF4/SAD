@@ -44,11 +44,11 @@ class CreateReportsTable extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->createTable('orders');
+        $this->forge->createTable('reports');
     }
 
     public function down()
     {
-        $this->forge->dropTable('orders');
+        $this->forge->dropTable('reports');
     }
 }

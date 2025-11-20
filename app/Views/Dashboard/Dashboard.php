@@ -7,6 +7,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+<?php
+    if (! function_exists('renderOrderItems')) {
+        function renderOrderItems(string $itemsJson): string
+        {
+            $items = json_decode($itemsJson, true) ?? [];
+
+            if (empty($items)) {
+                return '-';
+            }
+
+            $labels = array_map(static function ($item) {
+                $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+                $label = $item['name'] ?? '';
+
+                return $quantity > 1 ? "{$label} x{$quantity}" : $label;
+            }, $items);
+
+            return implode(', ', $labels);
+        }
+    }
+
+    $todaySales   = $todaySales ?? 0;
+    $totalOrders  = $totalOrders ?? 0;
+    $newCustomers = $newCustomers ?? 0;
+    $recentOrders = $recentOrders ?? [];
+?>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -28,21 +54,21 @@
             <div class="col-md-4">
                 <div class="p-4 card-custom">
                     <h4 class="mb-2">Today's Sales</h4>
-                    <h2 class="title">₱3,240</h2>
+                    <h2 class="title">₱<?= number_format($todaySales, 2) ?></h2>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="p-4 card-custom">
                     <h4 class="mb-2">Orders</h4>
-                    <h2 class="title">58</h2>
+                    <h2 class="title"><?= number_format($totalOrders) ?></h2>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="p-4 card-custom">
                     <h4 class="mb-2">New Customers</h4>
-                    <h2 class="title">12</h2>
+                    <h2 class="title"><?= number_format($newCustomers) ?></h2>
                 </div>
             </div>
         </div>
@@ -60,27 +86,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Ana Santos</td>
-                        <td>Cappuccino</td>
-                        <td>₱120</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mark Cruz</td>
-                        <td>Iced Latte</td>
-                        <td>₱140</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jessa Kim</td>
-                        <td>Mocha</td>
-                        <td>₱150</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                    </tr>
+                    <?php if (empty($recentOrders)): ?>
+                        <tr>
+                            <td colspan="5" class="text-center">No recent orders yet.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($recentOrders as $order): ?>
+                            <tr>
+                                <td><?= esc($order['id']) ?></td>
+                                <td><?= esc($order['customer_name']) ?></td>
+                                <td><?= esc(renderOrderItems($order['items'])) ?></td>
+                                <td>₱<?= number_format($order['total'], 2) ?></td>
+                                <td>
+                                    <?php
+                                        $badge = [
+                                            'Pending'   => 'bg-warning text-dark',
+                                            'Completed' => 'bg-success',
+                                            'Cancelled' => 'bg-danger',
+                                        ][ $order['status'] ] ?? 'bg-secondary';
+                                    ?>
+                                    <span class="badge <?= $badge ?>"><?= esc($order['status']) ?></span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
