@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffee Shop - Products</title>
+    <title>Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -54,7 +54,7 @@
     <div class="content">
         <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
             <div>
-                <p class="text-muted mb-1">Menu Studio</p>
+           
                 <h2 class="title m-0">Signature Coffee & Kitchen</h2>
             </div>
             <button class="btn btn-primary btn-primary-custom product-modal-trigger" data-bs-toggle="modal" data-bs-target="#productModal">
@@ -120,7 +120,7 @@
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="title mb-0">Best Sellers</h4>
-                <small class="text-muted">Mark items as Best Seller in the form to highlight them here.</small>
+                
             </div>
             <div class="d-flex gap-3 flex-wrap">
                 <?php if (empty($bestSellers)): ?>
@@ -149,7 +149,7 @@
         <div class="card-custom p-4">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <h4 class="title mb-0">Bar & Kitchen Inventory</h4>
-                <small class="text-muted">Track pricing, categories, and availability in one place.</small>
+               
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered align-middle" id="productsTable">

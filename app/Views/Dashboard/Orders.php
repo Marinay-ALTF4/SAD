@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coffee Shop - Orders</title>
+  <title>Orders</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -90,7 +90,7 @@
     <div class="card-custom p-4 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
         <h4 class="title mb-0">Pending / Cancelled Orders</h4>
-        <small class="text-muted">Switch a status to move orders to the completed section.</small>
+       
       </div>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
@@ -158,7 +158,7 @@
     <div class="card-custom p-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
         <h4 class="title mb-0">Completed Orders</h4>
-        <small class="text-muted">Completed orders feed the dashboard totals automatically.</small>
+        
       </div>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">

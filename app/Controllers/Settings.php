@@ -21,11 +21,14 @@ class Settings extends BaseController
         $userId = session()->get('user_id');
 
         $data = [
-            'settings'       => $this->settingsModel->first(),
-            'currentUser'    => $userId ? $this->userModel->find($userId) : null,
-            'users'          => $this->userModel->findAll(),
-            'validation'     => service('validation'),
-            'accountErrors'  => session()->getFlashdata('account_errors') ?? [],
+            'settings'        => $this->settingsModel->first(),
+            'currentUser'     => $userId ? $this->userModel->find($userId) : null,
+            'users'           => $this->userModel->findAll(),
+            'validation'      => service('validation'),
+            'accountErrors'   => session()->getFlashdata('account_errors') ?? [],
+            'userErrors'      => session()->getFlashdata('user_errors') ?? [],
+            'accountSuccess'  => session()->getFlashdata('account_success'),
+            'userFormSuccess' => session()->getFlashdata('user_form_success'),
         ];
 
         return view('Dashboard/Settings', $data);
@@ -113,7 +116,7 @@ class Settings extends BaseController
         ];
 
         if (! $this->validate($rules)) {
-            return redirect()->to('/settings/users/new')->withInput()->with('user_errors', $this->validator->getErrors());
+            return redirect()->to('/settings')->withInput()->with('user_errors', $this->validator->getErrors());
         }
 
         $this->userModel->insert([
@@ -123,7 +126,7 @@ class Settings extends BaseController
             'role'     => $this->request->getPost('new_role'),
         ]);
 
-        return redirect()->to('/settings/users/new')->with('user_form_success', 'New user added successfully.');
+        return redirect()->to('/settings')->with('user_form_success', 'New user added successfully.');
     }
 
     public function newUserForm()

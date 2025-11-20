@@ -162,11 +162,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="card-custom p-4 bg-light">
-                <h5 class="mb-2">Recommendation</h5>
-                <p class="mb-0"><?= esc($recommendation ?? 'Collect more data to unlock tailored insights.') ?></p>
-            </div>
+    
         </div>
     </div>
 </div>

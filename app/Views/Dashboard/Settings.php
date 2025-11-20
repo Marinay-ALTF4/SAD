@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffee Shop Settings</title>
+    <title>Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 
@@ -37,11 +37,17 @@
         </div>
 
         <!-- Feedback Messages -->
-        <?php if (session()->getFlashdata('success')): ?>
-            <div class="alert alert-success mt-3"><?= session()->getFlashdata('success') ?></div>
+        <?php if ($flash = session()->getFlashdata('success')): ?>
+            <div class="alert alert-success mt-3"><?= esc($flash) ?></div>
         <?php endif; ?>
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger mt-3"><?= session()->getFlashdata('error') ?></div>
+        <?php if ($flash = session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger mt-3"><?= esc($flash) ?></div>
+        <?php endif; ?>
+        <?php if (! empty($accountSuccess ?? null)): ?>
+            <div class="alert alert-success mt-3"><?= esc($accountSuccess) ?></div>
+        <?php endif; ?>
+        <?php if (! empty($userFormSuccess ?? null)): ?>
+            <div class="alert alert-success mt-3"><?= esc($userFormSuccess) ?></div>
         <?php endif; ?>
         <?php if (isset($validation) && $validation->getErrors()): ?>
             <div class="alert alert-danger mt-3">Please fix the highlighted fields below.</div>
@@ -89,6 +95,9 @@
                     <h4 class="title mb-3">Account Information</h4>
                     <form method="post" action="<?= base_url('settings/account') ?>">
                         <?= csrf_field() ?>
+                        <?php if (! empty($accountErrors)): ?>
+                            <div class="alert alert-danger">Please resolve the highlighted account fields.</div>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label class="form-label" for="accountUsername">Username</label>
                             <input type="text" class="form-control <?= isset($accountErrors['account_username']) ? 'is-invalid' : '' ?>" id="accountUsername" name="account_username" value="<?= old('account_username', $currentUser['username'] ?? '') ?>" />
@@ -112,13 +121,16 @@
                     <h4 class="title mb-3">Add New User</h4>
                     <form method="post" action="<?= base_url('settings/users') ?>">
                         <?= csrf_field() ?>
+                        <?php if (! empty($userErrors)): ?>
+                            <div class="alert alert-danger">Please correct the user details below.</div>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label class="form-label" for="newUsername">Username</label>
-                            <input type="text" class="form-control <?= isset($userErrors['new_username']) ? 'is-invalid' : '' ?>" id="newUsername" name="new_username" />
+                            <input type="text" class="form-control <?= isset($userErrors['new_username']) ? 'is-invalid' : '' ?>" id="newUsername" name="new_username" value="<?= esc(old('new_username')) ?>" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="newEmail">Email</label>
-                            <input type="email" class="form-control <?= isset($userErrors['new_email']) ? 'is-invalid' : '' ?>" id="newEmail" name="new_email" />
+                            <input type="email" class="form-control <?= isset($userErrors['new_email']) ? 'is-invalid' : '' ?>" id="newEmail" name="new_email" value="<?= esc(old('new_email')) ?>" />
                         </div>
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -128,8 +140,8 @@
                             <div class="col-md-6">
                                 <label class="form-label" for="newRole">Role</label>
                                 <select class="form-control <?= isset($userErrors['new_role']) ? 'is-invalid' : '' ?>" id="newRole" name="new_role">
-                                    <option value="admin">Admin</option>
-                                    <option value="staff" selected>Staff</option>
+                                    <option value="admin" <?= old('new_role') === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                    <option value="staff" <?= old('new_role', 'staff') === 'staff' ? 'selected' : '' ?>>Staff</option>
                                 </select>
                             </div>
                         </div>
