@@ -9,6 +9,7 @@ class Settings extends BaseController
 {
     protected $settingsModel;
     protected $userModel;
+    private array $roles = ['admin', 'staff'];
 
     public function __construct()
     {
@@ -21,14 +22,16 @@ class Settings extends BaseController
         $userId = session()->get('user_id');
 
         $data = [
-            'settings'        => $this->settingsModel->first(),
-            'currentUser'     => $userId ? $this->userModel->find($userId) : null,
-            'users'           => $this->userModel->findAll(),
-            'validation'      => service('validation'),
-            'accountErrors'   => session()->getFlashdata('account_errors') ?? [],
-            'userErrors'      => session()->getFlashdata('user_errors') ?? [],
-            'accountSuccess'  => session()->getFlashdata('account_success'),
-            'userFormSuccess' => session()->getFlashdata('user_form_success'),
+            'settings'             => $this->settingsModel->first(),
+            'currentUser'          => $userId ? $this->userModel->find($userId) : null,
+            'users'                => $this->userModel->findAll(),
+            'validation'           => service('validation'),
+            'accountErrors'        => session()->getFlashdata('account_errors') ?? [],
+            'userErrors'           => session()->getFlashdata('user_errors') ?? [],
+            'accountSuccess'       => session()->getFlashdata('account_success'),
+            'userFormSuccess'      => session()->getFlashdata('user_form_success'),
+            'userManagementNotice' => session()->getFlashdata('user_management_notice'),
+            'userManagementError'  => session()->getFlashdata('user_management_error'),
         ];
 
         return view('Dashboard/Settings', $data);
@@ -36,35 +39,7 @@ class Settings extends BaseController
 
     public function save()
     {
-        $rules = [
-            'shop_name'      => 'required|min_length[3]',
-            'shop_address'   => 'required',
-            'contact_number' => 'required',
-            'opening_hours'  => 'required',
-            'default_tax'    => 'required|decimal',
-        ];
-
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('error', 'Please correct the highlighted errors.');
-        }
-
-        $data = [
-            'shop_name'      => $this->request->getPost('shop_name'),
-            'shop_address'   => $this->request->getPost('shop_address'),
-            'contact_number' => $this->request->getPost('contact_number'),
-            'opening_hours'  => $this->request->getPost('opening_hours'),
-            'default_tax'    => $this->request->getPost('default_tax'),
-        ];
-
-        $existing = $this->settingsModel->first();
-
-        if ($existing) {
-            $data['id'] = $existing['id'];
-        }
-
-        $this->settingsModel->save($data);
-
-        return redirect()->to('/settings')->with('success', 'Settings saved successfully.');
+        return redirect()->to('/settings');
     }
 
     public function account()
@@ -75,35 +50,7 @@ class Settings extends BaseController
             return redirect()->to('/login');
         }
 
-        $rules = [
-            'account_username' => 'required|min_length[3]',
-            'account_email'    => "required|valid_email|is_unique[users.email,id,{$userId}]",
-            'account_password' => 'permit_empty|min_length[5]',
-        ];
-
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('account_errors', $this->validator->getErrors());
-        }
-
-        $data = [
-            'id'       => $userId,
-            'username' => $this->request->getPost('account_username'),
-            'email'    => $this->request->getPost('account_email'),
-        ];
-
-        $password = $this->request->getPost('account_password');
-        if (! empty($password)) {
-            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
-        }
-
-        $this->userModel->save($data);
-
-        session()->set([
-            'username' => $data['username'],
-            'email'    => $data['email'],
-        ]);
-
-        return redirect()->to('/settings')->with('account_success', 'Account information updated.');
+        return redirect()->to('/settings');
     }
 
     public function addUser()
@@ -127,6 +74,82 @@ class Settings extends BaseController
         ]);
 
         return redirect()->to('/settings')->with('user_form_success', 'New user added successfully.');
+    }
+
+    public function updateUserRole($id)
+    {
+        $user = $this->userModel->find($id);
+
+        if (! $user) {
+            return redirect()->to('/settings')->with('user_management_error', 'User not found.');
+        }
+
+        $role = $this->request->getPost('role');
+
+        if (! in_array($role, $this->roles, true)) {
+            return redirect()->to('/settings')->with('user_management_error', 'Invalid role selected.');
+        }
+
+        if ((int) session()->get('user_id') === (int) $id && $role !== 'admin') {
+            return redirect()->to('/settings')->with('user_management_error', 'You cannot remove your own admin access.');
+        }
+
+        $this->userModel->update($id, ['role' => $role]);
+
+        return redirect()->to('/settings')->with('user_management_notice', 'User role updated.');
+    }
+
+    public function deleteUser($id)
+    {
+        $user = $this->userModel->find($id);
+
+        if (! $user) {
+            return redirect()->to('/settings')->with('user_management_error', 'User not found.');
+        }
+
+        if ((int) session()->get('user_id') === (int) $id) {
+            return redirect()->to('/settings')->with('user_management_error', 'You cannot delete your own account while logged in.');
+        }
+
+        $this->userModel->delete($id);
+
+        return redirect()->to('/settings')->with('user_management_notice', 'User removed.');
+    }
+
+    public function updateUserProfile($id)
+    {
+        $user = $this->userModel->find($id);
+
+        if (! $user) {
+            return redirect()->to('/settings')->with('user_management_error', 'User not found.');
+        }
+
+        $rules = [
+            'edit_username' => 'required|min_length[3]',
+            'edit_email'    => "required|valid_email|is_unique[users.email,id,{$id}]",
+            'edit_password' => 'permit_empty|min_length[5]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->to('/settings')
+                ->withInput()
+                ->with('user_management_error', 'Please correct the highlighted user fields.');
+        }
+
+        $payload = [
+            'id'       => $id,
+            'username' => $this->request->getPost('edit_username'),
+            'email'    => $this->request->getPost('edit_email'),
+        ];
+
+        $password = $this->request->getPost('edit_password');
+        if (! empty($password)) {
+            $payload['password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        $this->userModel->save($payload);
+
+        return redirect()->to('/settings')->with('user_management_notice', 'User profile updated.');
     }
 
     public function newUserForm()

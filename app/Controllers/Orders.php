@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\OrderModel;
+use App\Models\OrderItemModel;
 
 class Orders extends BaseController
 {
@@ -10,11 +11,18 @@ class Orders extends BaseController
      * Allowed order statuses
      */
     private array $validStatuses = ['Pending', 'Completed', 'Cancelled'];
+    private OrderItemModel $orderItems;
+
+    public function __construct()
+    {
+        $this->orderItems = new OrderItemModel();
+    }
 
     public function index()
     {
         $model  = new OrderModel();
         $orders = $model->orderBy('order_date', 'DESC')->findAll();
+        $orders = $model->attachItems($orders);
 
         $data = [
             'pendingOrders'   => array_values(array_filter($orders, static fn ($order) => $order['status'] !== 'Completed')),
@@ -42,13 +50,17 @@ class Orders extends BaseController
 
         $data = [
             'customer_name' => $this->normalizeCustomerName($this->request->getPost('customer_name')),
-            'items'         => json_encode($items),
             'total'         => $this->calculateTotal($items),
             'status'        => $status,
             'order_date'    => date('Y-m-d H:i:s'),
         ];
 
+        $db = \Config\Database::connect();
+        $db->transStart();
         $model->insert($data);
+        $orderId = $model->getInsertID();
+        $this->syncItems($orderId, $items);
+        $db->transComplete();
 
         return redirect()->to('/orders')->with('success', 'Order created successfully.');
     }
@@ -72,12 +84,15 @@ class Orders extends BaseController
 
         $data = [
             'customer_name' => $this->normalizeCustomerName($this->request->getPost('customer_name')),
-            'items'         => json_encode($items),
             'total'         => $this->calculateTotal($items),
             'status'        => $status,
         ];
 
+        $db = \Config\Database::connect();
+        $db->transStart();
         $model->update($id, $data);
+        $this->syncItems($id, $items);
+        $db->transComplete();
 
         return redirect()->to('/orders')->with('success', 'Order updated successfully.');
     }
@@ -151,5 +166,25 @@ class Orders extends BaseController
         $name = trim((string) $name);
 
         return $name === '' ? 'Walk-in Customer' : $name;
+    }
+
+    private function syncItems(int $orderId, array $items): void
+    {
+        $this->orderItems->where('order_id', $orderId)->delete();
+
+        if (empty($items)) {
+            return;
+        }
+
+        $payload = array_map(static function ($item) use ($orderId) {
+            return [
+                'order_id'  => $orderId,
+                'item_name' => $item['name'],
+                'price'     => $item['price'],
+                'quantity'  => $item['quantity'],
+            ];
+        }, $items);
+
+        $this->orderItems->insertBatch($payload);
     }
 }

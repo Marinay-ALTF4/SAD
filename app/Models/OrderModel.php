@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\OrderItemModel;
+
 
 class OrderModel extends Model
 {
@@ -10,7 +12,6 @@ class OrderModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'customer_name',
-        'items',
         'total',
         'status',
         'order_date',
@@ -71,13 +72,41 @@ class OrderModel extends Model
     }
 
     /**
-     * Get recent orders
+     * Get recent orders with items
      */
     public function getRecentOrders(int $limit = 5): array
     {
-        return $this->orderBy('order_date', 'DESC')
+        $orders = $this->orderBy('order_date', 'DESC')
             ->limit($limit)
             ->findAll();
+
+        return $this->attachItems($orders);
+    }
+
+    public function attachItems(array $orders): array
+    {
+        if (empty($orders)) {
+            return $orders;
+        }
+
+        $orderIds = array_column($orders, 'id');
+        $itemModel = new OrderItemModel();
+        $items = $itemModel->getByOrderIds($orderIds);
+
+        $grouped = [];
+        foreach ($items as $item) {
+            $grouped[$item['order_id']][] = [
+                'name'     => $item['item_name'],
+                'price'    => (float) $item['price'],
+                'quantity' => (int) $item['quantity'],
+            ];
+        }
+
+        foreach ($orders as &$order) {
+            $order['items'] = $grouped[$order['id']] ?? [];
+        }
+
+        return $orders;
     }
 
     public function sumBetweenDates(string $startDate, string $endDate): float
@@ -131,37 +160,16 @@ class OrderModel extends Model
 
     public function getTopItems(int $limit = 5): array
     {
-        $orders = $this->where('status', 'Completed')->findAll();
-        $totals = [];
+        $db = \Config\Database::connect();
 
-        foreach ($orders as $order) {
-            $items = json_decode($order['items'], true) ?? [];
-            foreach ($items as $item) {
-                if (! isset($item['name'])) {
-                    continue;
-                }
-
-                $name = $item['name'];
-                $qty = isset($item['quantity']) ? (int) $item['quantity'] : 1;
-                $price = isset($item['price']) ? (float) $item['price'] : 0;
-
-                if (! isset($totals[$name])) {
-                    $totals[$name] = [
-                        'name'     => $name,
-                        'quantity' => 0,
-                        'revenue'  => 0,
-                    ];
-                }
-
-                $totals[$name]['quantity'] += $qty;
-                $totals[$name]['revenue']  += $price * $qty;
-            }
-        }
-
-        usort($totals, static function ($a, $b) {
-            return $b['revenue'] <=> $a['revenue'];
-        });
-
-        return array_slice(array_values($totals), 0, $limit);
+        return $db->table('order_items')
+            ->select('order_items.item_name AS name, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue')
+            ->join('orders', 'orders.id = order_items.order_id', 'inner')
+            ->where('orders.status', 'Completed')
+            ->groupBy('order_items.item_name')
+            ->orderBy('revenue', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
     }
 }

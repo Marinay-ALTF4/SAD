@@ -22,10 +22,6 @@ class CreateOrdersTable extends Migration
                     'constraint' => '100',
                     'null'       => false,
                 ],
-                'items' => [
-                    'type' => 'TEXT',
-                    'null' => false,
-                ],
                 'total' => [
                     'type'    => 'DECIMAL',
                     'constraint' => '10,2',

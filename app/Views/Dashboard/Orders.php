@@ -9,11 +9,13 @@
 <body>
 <?php
     if (! function_exists('renderOrderItems')) {
-        function renderOrderItems(string $itemsJson): string
+        function renderOrderItems($items): string
         {
-            $items = json_decode($itemsJson, true) ?? [];
+            if (is_string($items)) {
+                $items = json_decode($items, true) ?? [];
+            }
 
-            if (empty($items)) {
+            if (empty($items) || ! is_array($items)) {
                 return '-';
             }
 

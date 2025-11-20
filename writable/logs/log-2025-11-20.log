@@ -2716,3 +2716,1225 @@ DEBUG - 2025-11-20 09:08:31 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2025-11-20 09:08:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-11-20 09:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-11-20 09:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:10:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:10:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:10:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:11:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:11:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:12:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:12:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:13:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:14:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:14:57 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(92): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(81): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:14:57 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(92): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(81): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:14:57 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(92): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(81): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:14:57 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(92): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(81): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:15:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:15:02 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(93): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(82): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:15:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(93): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(82): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:02 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(93): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(82): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:02 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(93): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(82): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:15:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:15:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:15:07 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `order_i...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_i...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_i...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_i...', Array, false)
+#4 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(171): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\app\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+#6 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Reports->index()
+#7 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#8 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-11-20 09:15:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: reports]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 2 APPPATH\Models\OrderModel.php(171): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 4 APPPATH\Models\OrderModel.php(171): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:07 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 5 APPPATH\Models\OrderModel.php(171): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-20 09:15:17 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `order_i...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_i...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_i...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_i...', Array, false)
+#4 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(172): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\app\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+#6 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Reports->index()
+#7 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#8 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-11-20 09:15:17 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: reports]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 2 APPPATH\Models\OrderModel.php(172): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:17 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 4 APPPATH\Models\OrderModel.php(172): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:17 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = \'Completed\'
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `order_items`.`item_name` AS `name`, SUM(order_items.quantity) AS quantity, SUM(order_items.price * order_items.quantity) AS revenue
+FROM `order_items`
+INNER JOIN `orders` ON `orders`.`id` = `order_items`.`order_id`
+WHERE `orders`.`status` = :orders.status:
+GROUP BY `order_items`.`item_name`
+ORDER BY `revenue` DESC
+ LIMIT 5', [...], false)
+ 5 APPPATH\Models\OrderModel.php(172): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Reports.php(26): App\Models\OrderModel->getTopItems(5)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:15:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:15:18 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:15:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:15:18 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:15:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:16:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:16:02 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:16:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:02 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:02 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:16:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:16:03 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:16:03 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:03 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:03 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:16:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:16:08 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:16:08 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:08 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:08 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:16:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:16:08 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:16:08 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:08 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:08 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:16:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:16:41 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:16:41 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:41 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:16:41 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:17:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:17:31 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:17:31 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:17:31 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:17:31 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:18:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-11-20 09:18:07 --> mysqli_sql_exception: Table 'saddb.order_items' doesn't exist in C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\SAD\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\SAD\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\SAD\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\SAD\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\SAD\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\SAD\app\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds(Array)
+#8 C:\xampp\htdocs\SAD\app\Models\OrderModel.php(83): App\Models\OrderModel->attachItems(Array)
+#9 C:\xampp\htdocs\SAD\app\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+#10 C:\xampp\htdocs\SAD\system\CodeIgniter.php(933): App\Controllers\Home->index()
+#11 C:\xampp\htdocs\SAD\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#12 C:\xampp\htdocs\SAD\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\xampp\htdocs\SAD\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#14 C:\xampp\htdocs\SAD\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#15 C:\xampp\htdocs\SAD\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#16 {main}
+CRITICAL - 2025-11-20 09:18:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+[Method: GET, Route: dashboard]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 6 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 7 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:18:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 8 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+ 9 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-20 09:18:07 --> [Caused by] mysqli_sql_exception: Table 'saddb.order_items' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `order_items`
+WHERE `order_id` IN (\'4\',\'3\',\'2\')
+ORDER BY `order_id` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `order_items`
+WHERE `order_id` IN :order_id:
+ORDER BY `order_id` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\OrderItemModel.php(24): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Models\OrderModel.php(94): App\Models\OrderItemModel->getByOrderIds([...])
+ 9 APPPATH\Models\OrderModel.php(83): App\Models\OrderModel->attachItems([...])
+10 APPPATH\Controllers\Home.php(17): App\Models\OrderModel->getRecentOrders()
+11 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+12 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+13 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+14 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+15 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+16 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-20 09:18:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:18:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:19:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:20:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:20:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:21:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:21:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:21:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:21:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:21:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:23:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:24:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:25:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:26:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:27:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:27:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:28:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-20 09:29:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

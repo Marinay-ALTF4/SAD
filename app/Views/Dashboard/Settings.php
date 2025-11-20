@@ -49,95 +49,40 @@
         <?php if (! empty($userFormSuccess ?? null)): ?>
             <div class="alert alert-success mt-3"><?= esc($userFormSuccess) ?></div>
         <?php endif; ?>
+        <?php if (! empty($userManagementNotice ?? null)): ?>
+            <div class="alert alert-success mt-3"><?= esc($userManagementNotice) ?></div>
+        <?php endif; ?>
+        <?php if (! empty($userManagementError ?? null)): ?>
+            <div class="alert alert-danger mt-3"><?= esc($userManagementError) ?></div>
+        <?php endif; ?>
         <?php if (isset($validation) && $validation->getErrors()): ?>
             <div class="alert alert-danger mt-3">Please fix the highlighted fields below.</div>
         <?php endif; ?>
 
-        <!-- ===================== GRID: 2x2 Boxes ===================== -->
+        <!-- Add New User Section -->
         <div class="row g-4">
-
-            <!-- Shop Settings -->
-            <div class="col-md-6">
-                <div class="card-custom p-4 h-100">
-                    <h4 class="title mb-3">Shop Settings</h4>
-                    <form method="post" action="<?= base_url('settings') ?>">
-                        <?= csrf_field() ?>
-                        <div class="mb-3">
-                            <label class="form-label" for="shopName">Shop Name</label>
-                            <input type="text" class="form-control <?= isset($validation) && $validation->hasError('shop_name') ? 'is-invalid' : '' ?>" id="shopName" name="shop_name" value="<?= old('shop_name', $settings['shop_name'] ?? '') ?>" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="shopAddress">Shop Address</label>
-                            <input type="text" class="form-control <?= isset($validation) && $validation->hasError('shop_address') ? 'is-invalid' : '' ?>" id="shopAddress" name="shop_address" value="<?= old('shop_address', $settings['shop_address'] ?? '') ?>" />
-                        </div>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="contactNumber">Contact Number</label>
-                                <input type="text" class="form-control <?= isset($validation) && $validation->hasError('contact_number') ? 'is-invalid' : '' ?>" id="contactNumber" name="contact_number" value="<?= old('contact_number', $settings['contact_number'] ?? '') ?>" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="openHours">Opening Hours</label>
-                                <input type="text" class="form-control <?= isset($validation) && $validation->hasError('opening_hours') ? 'is-invalid' : '' ?>" id="openHours" name="opening_hours" value="<?= old('opening_hours', $settings['opening_hours'] ?? '') ?>" />
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <label class="form-label" for="defaultTax">Default Tax (%)</label>
-                            <input type="number" step="0.01" class="form-control <?= isset($validation) && $validation->hasError('default_tax') ? 'is-invalid' : '' ?>" id="defaultTax" name="default_tax" value="<?= old('default_tax', $settings['default_tax'] ?? '') ?>" />
-                        </div>
-                        <button type="submit" class="btn btn-brown mt-4 w-100">Save Settings</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Account Information -->
-            <div class="col-md-6">
-                <div class="card-custom p-4 h-100">
-                    <h4 class="title mb-3">Account Information</h4>
-                    <form method="post" action="<?= base_url('settings/account') ?>">
-                        <?= csrf_field() ?>
-                        <?php if (! empty($accountErrors)): ?>
-                            <div class="alert alert-danger">Please resolve the highlighted account fields.</div>
-                        <?php endif; ?>
-                        <div class="mb-3">
-                            <label class="form-label" for="accountUsername">Username</label>
-                            <input type="text" class="form-control <?= isset($accountErrors['account_username']) ? 'is-invalid' : '' ?>" id="accountUsername" name="account_username" value="<?= old('account_username', $currentUser['username'] ?? '') ?>" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="accountEmail">Email</label>
-                            <input type="email" class="form-control <?= isset($accountErrors['account_email']) ? 'is-invalid' : '' ?>" id="accountEmail" name="account_email" value="<?= old('account_email', $currentUser['email'] ?? '') ?>" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="accountPassword">New Password <small>(optional)</small></label>
-                            <input type="password" class="form-control <?= isset($accountErrors['account_password']) ? 'is-invalid' : '' ?>" id="accountPassword" name="account_password" />
-                        </div>
-                        <button type="submit" class="btn btn-brown w-100">Update Account</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Add New User -->
-            <div class="col-md-6">
-                <div class="card-custom p-4 h-100">
+            <div class="col-12">
+                <div class="card-custom p-4">
                     <h4 class="title mb-3">Add New User</h4>
                     <form method="post" action="<?= base_url('settings/users') ?>">
                         <?= csrf_field() ?>
                         <?php if (! empty($userErrors)): ?>
                             <div class="alert alert-danger">Please correct the user details below.</div>
                         <?php endif; ?>
-                        <div class="mb-3">
-                            <label class="form-label" for="newUsername">Username</label>
-                            <input type="text" class="form-control <?= isset($userErrors['new_username']) ? 'is-invalid' : '' ?>" id="newUsername" name="new_username" value="<?= esc(old('new_username')) ?>" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="newEmail">Email</label>
-                            <input type="email" class="form-control <?= isset($userErrors['new_email']) ? 'is-invalid' : '' ?>" id="newEmail" name="new_email" value="<?= esc(old('new_email')) ?>" />
-                        </div>
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label class="form-label" for="newUsername">Username</label>
+                                <input type="text" class="form-control <?= isset($userErrors['new_username']) ? 'is-invalid' : '' ?>" id="newUsername" name="new_username" value="<?= esc(old('new_username')) ?>" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="newEmail">Email</label>
+                                <input type="email" class="form-control <?= isset($userErrors['new_email']) ? 'is-invalid' : '' ?>" id="newEmail" name="new_email" value="<?= esc(old('new_email')) ?>" />
+                            </div>
+                            <div class="col-md-2">
                                 <label class="form-label" for="newPassword">Password</label>
                                 <input type="password" class="form-control <?= isset($userErrors['new_password']) ? 'is-invalid' : '' ?>" id="newPassword" name="new_password" />
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <label class="form-label" for="newRole">Role</label>
                                 <select class="form-control <?= isset($userErrors['new_role']) ? 'is-invalid' : '' ?>" id="newRole" name="new_role">
                                     <option value="admin" <?= old('new_role') === 'admin' ? 'selected' : '' ?>>Admin</option>
@@ -149,10 +94,12 @@
                     </form>
                 </div>
             </div>
+        </div>
 
-            <!-- User Management -->
-            <div class="col-md-6">
-                <div class="card-custom p-4 h-100">
+        <!-- User Management Section -->
+        <div class="row g-4 mt-1">
+            <div class="col-12">
+                <div class="card-custom p-4">
                     <h4 class="title mb-3">User Management</h4>
                     <div class="table-responsive">
                         <table class="table table-striped align-middle">
@@ -163,6 +110,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Created</th>
+                                    <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,13 +120,41 @@
                                             <td><?= $index + 1 ?></td>
                                             <td><?= esc($user['username']) ?></td>
                                             <td><?= esc($user['email']) ?></td>
-                                            <td><span class="badge bg-secondary text-uppercase"><?= esc($user['role']) ?></span></td>
+                                            <td>
+                                                <form method="post" action="<?= base_url('settings/users/' . $user['id'] . '/role') ?>" class="d-flex gap-2 align-items-center">
+                                                    <?= csrf_field() ?>
+                                                    <select name="role" class="form-select form-select-sm" <?= (int) $user['id'] === (int) session()->get('user_id') ? 'disabled' : '' ?>>
+                                                        <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                                        <option value="staff" <?= $user['role'] === 'staff' ? 'selected' : '' ?>>Staff</option>
+                                                    </select>
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary" <?= (int) $user['id'] === (int) session()->get('user_id') ? 'disabled' : '' ?>>Save</button>
+                                                </form>
+                                            </td>
                                             <td><?= esc(date('M d, Y', strtotime($user['created_at'] ?? 'now'))) ?></td>
+                                            <td class="text-end">
+                                                <div class="d-flex gap-2 justify-content-end flex-wrap">
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-outline-secondary user-edit-trigger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editUserModal"
+                                                            data-user='<?= json_encode([
+                                                                'id'       => $user['id'],
+                                                                'username' => $user['username'],
+                                                                'email'    => $user['email'],
+                                                            ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
+                                                        Edit Info
+                                                    </button>
+                                                    <form method="post" action="<?= base_url('settings/users/' . $user['id'] . '/delete') ?>" onsubmit="return confirm('Delete this user?');">
+                                                        <?= csrf_field() ?>
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" <?= (int) $user['id'] === (int) session()->get('user_id') ? 'disabled' : '' ?>>Delete</button>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="5" class="text-center text-muted">No users found.</td>
+                                        <td colspan="6" class="text-center text-muted">No users found.</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
@@ -186,13 +162,44 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-        </div> <!-- End Grid -->
 
     </div> <!-- End Content -->
 
 </body>
 </html>
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="editUserForm" action="">
+                <?= csrf_field() ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" name="edit_username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="edit_email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password <small>(leave blank to keep current)</small></label>
+                        <input type="password" class="form-control" name="edit_password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-brown">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <style>
         /* --- General Styles --- */
         body {
@@ -280,3 +287,27 @@
             color: #5a3825;
         }
     </style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const editUserModal = document.getElementById('editUserModal');
+    const editUserForm = document.getElementById('editUserForm');
+    const defaultAction = '<?= base_url('settings/users') ?>';
+
+    editUserModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        if (!button) return;
+        const payload = button.getAttribute('data-user');
+        if (!payload) return;
+
+        const user = JSON.parse(payload);
+        editUserForm.setAttribute('action', `${defaultAction}/${user.id}/profile`);
+        editUserForm.edit_username.value = user.username;
+        editUserForm.edit_email.value = user.email;
+        editUserForm.edit_password.value = '';
+    });
+
+    editUserModal.addEventListener('hidden.bs.modal', () => {
+        editUserForm.reset();
+        editUserForm.setAttribute('action', defaultAction);
+    });
+</script>
