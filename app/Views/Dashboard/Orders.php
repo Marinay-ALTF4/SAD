@@ -86,9 +86,11 @@
     <a href="<?= base_url('dashboard') ?>">Dashboard</a>
     <a href="<?= base_url('orders') ?>" class="active">Orders</a>
     <a href="<?= base_url('product') ?>">Products</a>
-    <a href="<?= base_url('expenses') ?>">Expenses</a>
-    <a href="<?= base_url('reports') ?>">Reports</a>
-    <a href="<?= base_url('settings') ?>">Settings</a>
+    <?php if (session()->get('role') === 'admin'): ?>
+      <a href="<?= base_url('expenses') ?>">Expenses</a>
+      <a href="<?= base_url('reports') ?>">Reports</a>
+      <a href="<?= base_url('settings') ?>">Settings</a>
+    <?php endif; ?>
     <a href="<?= base_url('logout') ?>">Logout</a>
   </div>
 

@@ -19,6 +19,11 @@ class Settings extends BaseController
 
     public function index()
     {
+        // Check if user is admin
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/dashboard')->with('error', 'Access denied. This page is only available for administrators.');
+        }
+
         $userId = session()->get('user_id');
 
         $data = [

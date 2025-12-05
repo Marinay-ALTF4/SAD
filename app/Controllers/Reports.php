@@ -8,6 +8,11 @@ class Reports extends BaseController
 {
     public function index()
     {
+        // Check if user is admin
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/dashboard')->with('error', 'Access denied. This page is only available for administrators.');
+        }
+
         $orders = new OrderModel();
 
         $today        = date('Y-m-d');
