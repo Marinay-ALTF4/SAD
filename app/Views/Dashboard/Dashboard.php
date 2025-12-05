@@ -22,11 +22,49 @@
             $labels = array_map(static function ($item) {
                 $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
                 $label = $item['name'] ?? '';
+                // Remove size from name if present (format: "Product Name (Size)")
+                $label = preg_replace('/\s*\((Small|Medium|Large)\)$/', '', $label);
 
                 return $quantity > 1 ? "{$label} x{$quantity}" : $label;
             }, $items);
 
             return implode(', ', $labels);
+        }
+    }
+
+    if (! function_exists('renderOrderSizes')) {
+        function renderOrderSizes($items): string
+        {
+            if (is_string($items)) {
+                $items = json_decode($items, true) ?? [];
+            }
+
+            if (empty($items) || ! is_array($items)) {
+                return '-';
+            }
+
+            $sizes = [];
+            foreach ($items as $item) {
+                $name = $item['name'] ?? '';
+                $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+                
+                // Extract size from name (format: "Product Name (Size)")
+                $size = 'Small'; // Default
+                if (preg_match('/\s*\((Small|Medium|Large)\)$/', $name, $matches)) {
+                    $size = $matches[1];
+                } elseif (isset($item['size'])) {
+                    $size = $item['size'];
+                }
+                
+                // Display size with quantity if multiple
+                if ($quantity > 1) {
+                    $sizes[] = "{$size} x{$quantity}";
+                } else {
+                    $sizes[] = $size;
+                }
+            }
+
+            return implode(', ', $sizes);
         }
     }
 
@@ -83,6 +121,7 @@
                         <th>#</th>
                         <th>Customer</th>
                         <th>Order</th>
+                        <th>Cup Size</th>
                         <th>Total</th>
                         <th>Status</th>
                     </tr>
@@ -90,7 +129,7 @@
                 <tbody>
                     <?php if (empty($recentOrders)): ?>
                         <tr>
-                            <td colspan="5" class="text-center">No recent orders yet.</td>
+                            <td colspan="6" class="text-center">No recent orders yet.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($recentOrders as $order): ?>
@@ -98,6 +137,7 @@
                                 <td><?= esc($order['id']) ?></td>
                                 <td><?= esc($order['customer_name']) ?></td>
                                 <td><?= esc(renderOrderItems($order['items'])) ?></td>
+                                <td><?= esc(renderOrderSizes($order['items'])) ?></td>
                                 <td>₱<?= number_format($order['total'], 2) ?></td>
                                 <td>
                                     <?php

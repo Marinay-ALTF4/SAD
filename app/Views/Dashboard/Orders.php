@@ -21,6 +21,8 @@
 
             $labels = array_map(static function ($item) {
                 $name = $item['name'] ?? '';
+                // Remove size from name if present (format: "Product Name (Size)")
+                $name = preg_replace('/\s*\((Small|Medium|Large)\)$/', '', $name);
                 $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
                 return $quantity > 1 ? "{$name} x{$quantity}" : $name;
             }, $items);
@@ -29,12 +31,52 @@
         }
     }
 
+    if (! function_exists('renderOrderSizes')) {
+        function renderOrderSizes($items): string
+        {
+            if (is_string($items)) {
+                $items = json_decode($items, true) ?? [];
+            }
+
+            if (empty($items) || ! is_array($items)) {
+                return '-';
+            }
+
+            $sizes = [];
+            foreach ($items as $item) {
+                $name = $item['name'] ?? '';
+                $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+                
+                // Extract size from name (format: "Product Name (Size)")
+                $size = 'Small'; // Default
+                if (preg_match('/\s*\((Small|Medium|Large)\)$/', $name, $matches)) {
+                    $size = $matches[1];
+                } elseif (isset($item['size'])) {
+                    $size = $item['size'];
+                }
+                
+                // Display size with quantity if multiple
+                if ($quantity > 1) {
+                    $sizes[] = "{$size} x{$quantity}";
+                } else {
+                    $sizes[] = $size;
+                }
+            }
+
+            return implode(', ', $sizes);
+        }
+    }
+
     $pendingOrders   = $pendingOrders ?? [];
     $completedOrders = $completedOrders ?? [];
+    $cancelledOrders = $cancelledOrders ?? [];
+    $categories      = $categories ?? [];
+    $products        = $products ?? [];
     $stats = array_merge([
         'todayOrders' => 0,
         'pending'     => 0,
         'completed'   => 0,
+        'cancelled'   => 0,
     ], $stats ?? []);
 ?>
 
@@ -68,30 +110,36 @@
 
     <!-- Summary Cards -->
     <div class="row g-4 mb-4">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card-custom p-4 text-center">
           <h5>Today's Orders</h5>
           <h2 class="title"><?= number_format($stats['todayOrders']) ?></h2>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card-custom p-4 text-center">
           <h5>Pending Orders</h5>
           <h2 class="title"><?= number_format($stats['pending']) ?></h2>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card-custom p-4 text-center">
           <h5>Completed Orders</h5>
           <h2 class="title"><?= number_format($stats['completed']) ?></h2>
         </div>
       </div>
+      <div class="col-md-3">
+        <div class="card-custom p-4 text-center">
+          <h5>Cancelled Orders</h5>
+          <h2 class="title"><?= number_format($stats['cancelled']) ?></h2>
+        </div>
+      </div>
     </div>
 
-    <!-- Pending / Cancelled Orders -->
+    <!-- Pending Orders -->
     <div class="card-custom p-4 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h4 class="title mb-0">Pending / Cancelled Orders</h4>
+        <h4 class="title mb-0">Pending Orders</h4>
        
       </div>
       <div class="table-responsive">
@@ -101,6 +149,7 @@
               <th>ID</th>
               <th>Customer</th>
               <th>Order Items</th>
+              <th>Cup Size</th>
               <th>Total</th>
               <th>Status</th>
               <th>Order Date</th>
@@ -110,7 +159,7 @@
           <tbody>
             <?php if (empty($pendingOrders)): ?>
               <tr>
-                <td colspan="7" class="text-center text-muted">No pending or cancelled orders.</td>
+                <td colspan="8" class="text-center text-muted">No pending orders.</td>
               </tr>
             <?php else: ?>
               <?php foreach ($pendingOrders as $order): ?>
@@ -118,6 +167,7 @@
                   <td><?= esc($order['id']) ?></td>
                   <td><?= esc($order['customer_name']) ?></td>
                   <td><?= esc(renderOrderItems($order['items'])) ?></td>
+                  <td><?= esc(renderOrderSizes($order['items'])) ?></td>
                   <td>₱<?= number_format($order['total'], 2) ?></td>
                   <td width="170">
                     <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
@@ -157,7 +207,7 @@
     </div>
 
     <!-- Completed Orders -->
-    <div class="card-custom p-4">
+    <div class="card-custom p-4 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
         <h4 class="title mb-0">Completed Orders</h4>
         
@@ -169,16 +219,17 @@
               <th>ID</th>
               <th>Customer</th>
               <th>Order Items</th>
+              <th>Cup Size</th>
               <th>Total</th>
-              <th>Order Date</th>
               <th>Status</th>
-              <th width="200">Actions</th>
+              <th>Order Date</th>
+              <th width="230">Actions</th>
             </tr>
           </thead>
           <tbody>
             <?php if (empty($completedOrders)): ?>
               <tr>
-                <td colspan="7" class="text-center text-muted">No completed orders yet.</td>
+                <td colspan="8" class="text-center text-muted">No completed orders yet.</td>
               </tr>
             <?php else: ?>
               <?php foreach ($completedOrders as $order): ?>
@@ -186,9 +237,9 @@
                   <td><?= esc($order['id']) ?></td>
                   <td><?= esc($order['customer_name']) ?></td>
                   <td><?= esc(renderOrderItems($order['items'])) ?></td>
+                  <td><?= esc(renderOrderSizes($order['items'])) ?></td>
                   <td>₱<?= number_format($order['total'], 2) ?></td>
-                  <td><?= date('M d, Y g:i A', strtotime($order['order_date'])) ?></td>
-                  <td width="160">
+                  <td width="170">
                     <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
                       <?= csrf_field() ?>
                       <select name="status" class="form-select form-select-sm status-select" onchange="this.form.submit()">
@@ -200,6 +251,77 @@
                       </select>
                     </form>
                   </td>
+                  <td><?= date('M d, Y g:i A', strtotime($order['order_date'])) ?></td>
+                  <td class="text-center">
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                      <button class="btn btn-sm btn-info text-white order-view-trigger" data-bs-toggle="modal" data-bs-target="#viewModal"
+                              data-order='<?= json_encode($order, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
+                        View
+                      </button>
+                      <button class="btn btn-sm btn-warning text-dark order-modal-trigger" data-bs-toggle="modal" data-bs-target="#orderModal"
+                              data-order='<?= json_encode($order, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
+                        Edit
+                      </button>
+                      <form method="post" action="<?= base_url('orders/' . $order['id'] . '/delete') ?>" onsubmit="return confirm('Delete this order?');">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Cancelled Orders -->
+    <div class="card-custom p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h4 class="title mb-0">Cancelled Orders</h4>
+        
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Order Items</th>
+              <th>Cup Size</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Order Date</th>
+              <th width="230">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (empty($cancelledOrders)): ?>
+              <tr>
+                <td colspan="8" class="text-center text-muted">No cancelled orders yet.</td>
+              </tr>
+            <?php else: ?>
+              <?php foreach ($cancelledOrders as $order): ?>
+                <tr>
+                  <td><?= esc($order['id']) ?></td>
+                  <td><?= esc($order['customer_name']) ?></td>
+                  <td><?= esc(renderOrderItems($order['items'])) ?></td>
+                  <td><?= esc(renderOrderSizes($order['items'])) ?></td>
+                  <td>₱<?= number_format($order['total'], 2) ?></td>
+                  <td width="170">
+                    <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
+                      <?= csrf_field() ?>
+                      <select name="status" class="form-select form-select-sm status-select" onchange="this.form.submit()">
+                        <?php foreach (['Cancelled','Pending','Completed'] as $status): ?>
+                          <option value="<?= $status ?>" <?= $status === $order['status'] ? 'selected' : '' ?>>
+                            <?= $status ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </form>
+                  </td>
+                  <td><?= date('M d, Y g:i A', strtotime($order['order_date'])) ?></td>
                   <td class="text-center">
                     <div class="d-flex flex-wrap gap-2 justify-content-center">
                       <button class="btn btn-sm btn-info text-white order-view-trigger" data-bs-toggle="modal" data-bs-target="#viewModal"
@@ -251,9 +373,11 @@
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th width="50%">Item</th>
-                      <th width="20%">Price</th>
-                      <th width="20%">Qty</th>
+                      <th width="20%">Category</th>
+                      <th width="25%">Product</th>
+                      <th width="15%">Cup Size</th>
+                      <th width="12%">Price</th>
+                      <th width="12%">Qty</th>
                       <th width="10%"></th>
                     </tr>
                   </thead>
@@ -331,18 +455,133 @@
       Cancelled: 'bg-danger'
     };
 
-    const addItemRow = (item = {name: '', price: '', quantity: 1}) => {
+    // Products and categories data from PHP
+    const categories = <?= json_encode($categories, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+    const products = <?= json_encode($products, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+
+    // Build category options HTML
+    const buildCategoryOptions = (selectedCategory = '') => {
+      let options = '<option value="">Select Category</option>';
+      for (const [key, label] of Object.entries(categories)) {
+        options += `<option value="${key}" ${key === selectedCategory ? 'selected' : ''}>${label}</option>`;
+      }
+      return options;
+    };
+
+    // Build product options HTML filtered by category
+    const buildProductOptions = (category = '', selectedProductId = '') => {
+      let options = '<option value="">Select Product</option>';
+      if (category) {
+        const filteredProducts = products.filter(p => p.category === category);
+        filteredProducts.forEach(product => {
+          const isSelected = selectedProductId && product.id == selectedProductId ? 'selected' : '';
+          options += `<option value="${product.id}" data-price="${product.price}" data-name="${product.name}" ${isSelected}>${product.name}</option>`;
+        });
+      }
+      return options;
+    };
+
+    // Cup size pricing
+    const sizePrices = {
+      'Small': 0,
+      'Medium': 10.00,
+      'Large': 20.00
+    };
+
+    const calculateItemPrice = (basePrice, size) => {
+      const base = parseFloat(basePrice) || 0;
+      const sizePremium = sizePrices[size] || 0;
+      return base + sizePremium;
+    };
+
+    const addItemRow = (item = {category: '', product_id: '', product_name: '', price: '', quantity: 1, size: 'Small'}) => {
       const index = itemsBody.children.length;
+      const basePrice = item.base_price || '';
+      const size = item.size || 'Small';
+      const finalPrice = basePrice ? calculateItemPrice(basePrice, size) : '';
+      
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><input type="text" name="items[${index}][name]" class="form-control" value="${item.name ?? ''}" placeholder="Item name"></td>
-        <td><input type="number" step="0.01" min="0" name="items[${index}][price]" class="form-control item-price" value="${item.price ?? ''}"></td>
-        <td><input type="number" min="1" name="items[${index}][quantity]" class="form-control item-qty" value="${item.quantity ?? 1}"></td>
+        <td>
+          <select name="items[${index}][category]" class="form-select form-select-sm item-category" data-index="${index}">
+            ${buildCategoryOptions(item.category ?? '')}
+          </select>
+        </td>
+        <td>
+          <select name="items[${index}][product_id]" class="form-select form-select-sm item-product" data-index="${index}" ${!item.category ? 'disabled' : ''}>
+            ${buildProductOptions(item.category ?? '', item.product_id ?? '')}
+          </select>
+          <input type="hidden" name="items[${index}][name]" class="item-name" value="${item.product_name ?? ''}">
+          <input type="hidden" name="items[${index}][base_price]" class="item-base-price" value="${basePrice}">
+        </td>
+        <td>
+          <select name="items[${index}][size]" class="form-select form-select-sm item-size" data-index="${index}">
+            <option value="Small" ${size === 'Small' ? 'selected' : ''}>Small</option>
+            <option value="Medium" ${size === 'Medium' ? 'selected' : ''}>Medium (+₱10)</option>
+            <option value="Large" ${size === 'Large' ? 'selected' : ''}>Large (+₱20)</option>
+          </select>
+        </td>
+        <td>
+          <input type="number" step="0.01" min="0" name="items[${index}][price]" class="form-control form-control-sm item-price" value="${finalPrice}" readonly>
+        </td>
+        <td>
+          <input type="number" min="1" name="items[${index}][quantity]" class="form-control form-control-sm item-qty" value="${item.quantity ?? 1}">
+        </td>
         <td class="text-center">
           <button type="button" class="btn btn-sm btn-outline-danger remove-item">&times;</button>
         </td>
       `;
       itemsBody.appendChild(row);
+      
+      // Attach event listeners
+      const categorySelect = row.querySelector('.item-category');
+      const productSelect = row.querySelector('.item-product');
+      const sizeSelect = row.querySelector('.item-size');
+      const priceInput = row.querySelector('.item-price');
+      const basePriceInput = row.querySelector('.item-base-price');
+      const nameInput = row.querySelector('.item-name');
+      const qtyInput = row.querySelector('.item-qty');
+      
+      const updatePrice = () => {
+        const basePrice = parseFloat(basePriceInput.value) || 0;
+        const size = sizeSelect.value;
+        const finalPrice = calculateItemPrice(basePrice, size);
+        priceInput.value = basePrice > 0 ? finalPrice.toFixed(2) : '';
+        recalcTotal();
+      };
+      
+      categorySelect.addEventListener('change', function() {
+        const category = this.value;
+        if (category) {
+          productSelect.innerHTML = buildProductOptions(category);
+          productSelect.disabled = false;
+        } else {
+          productSelect.innerHTML = '<option value="">Select Product</option>';
+          productSelect.disabled = true;
+          basePriceInput.value = '';
+          priceInput.value = '';
+          nameInput.value = '';
+        }
+        recalcTotal();
+      });
+      
+      productSelect.addEventListener('change', function() {
+        const option = this.options[this.selectedIndex];
+        if (option.value) {
+          const basePrice = option.dataset.price || '';
+          basePriceInput.value = basePrice;
+          nameInput.value = option.dataset.name || '';
+          updatePrice();
+        } else {
+          basePriceInput.value = '';
+          priceInput.value = '';
+          nameInput.value = '';
+        }
+        recalcTotal();
+      });
+      
+      sizeSelect.addEventListener('change', updatePrice);
+      qtyInput.addEventListener('input', recalcTotal);
     };
 
     const recalcTotal = () => {
@@ -375,7 +614,45 @@
       if (items.length === 0) {
         addItemRow();
       } else {
-        items.forEach(item => addItemRow(item));
+        // For existing orders, try to match products by name to get category and product_id
+        items.forEach(item => {
+          let itemName = item.name || '';
+          let size = 'Small';
+          
+          // Extract size from name if present (format: "Product Name (Size)")
+          const sizeMatch = itemName.match(/^(.+?)\s*\((Small|Medium|Large)\)$/);
+          if (sizeMatch) {
+            itemName = sizeMatch[1].trim();
+            size = sizeMatch[2];
+          } else if (item.size) {
+            size = item.size;
+          }
+          
+          const product = products.find(p => p.name === itemName);
+          const orderPrice = parseFloat(item.price) || 0;
+          
+          // Calculate base price from order price and size
+          let basePrice = product ? parseFloat(product.price) : orderPrice;
+          if (product && size !== 'Small') {
+            const sizePremium = size === 'Medium' ? 10 : size === 'Large' ? 20 : 0;
+            basePrice = orderPrice - sizePremium;
+            // Ensure base price is not negative
+            if (basePrice < product.price) {
+              basePrice = parseFloat(product.price);
+            }
+          }
+          
+          const itemData = {
+            category: product ? product.category : '',
+            product_id: product ? product.id : '',
+            product_name: itemName,
+            base_price: basePrice,
+            price: orderPrice,
+            quantity: item.quantity,
+            size: size
+          };
+          addItemRow(itemData);
+        });
       }
       recalcTotal();
     };
@@ -411,7 +688,7 @@
     });
 
     itemsBody.addEventListener('input', (event) => {
-      if (event.target.classList.contains('item-price') || event.target.classList.contains('item-qty')) {
+      if (event.target.classList.contains('item-qty')) {
         recalcTotal();
       }
     });

@@ -148,7 +148,7 @@
         <!-- Product Table -->
         <div class="card-custom p-4">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h4 class="title mb-0">Bar & Kitchen Inventory</h4>
+                <h4 class="title mb-0">Product Inventory</h4>
                
             </div>
             <div class="table-responsive">

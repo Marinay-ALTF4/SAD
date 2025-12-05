@@ -7,11 +7,17 @@ use App\Models\ProductModel;
 class Product extends BaseController
 {
     private array $categories = [
-        'signature-coffee' => 'Signature Coffee',
-        'iced-coffee'      => 'Iced & Cold Brew',
-        'non-coffee'       => 'Tea & Non-Coffee',
-        'pastries'         => 'Artisan Pastries',
-        'savory'           => 'Savory Bites',
+        'coffee-series'     => 'Coffee Series',
+        'non-coffee'        => 'Non-Coffee',
+        'milktea'           => 'Milktea',
+        'coffee-frappes'    => 'Coffee Frappes',
+        'matcha-series'     => 'Matcha Series',
+        'fruitmilk-series'  => 'Fruitmilk Series',
+        'yakult-series'     => 'Yakult Series',
+        'coke-float'        => 'Coke Float',
+        'hot-coffee'        => 'Hot Coffee',
+        'fruit-soda-series' => 'Fruit Soda Series',
+        'snacks-series'     => 'Snacks Series',
     ];
 
     private array $statuses = ['Available', 'Out of Stock'];

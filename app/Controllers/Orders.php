@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\OrderModel;
 use App\Models\OrderItemModel;
+use App\Models\ProductModel;
 
 class Orders extends BaseController
 {
@@ -12,6 +13,20 @@ class Orders extends BaseController
      */
     private array $validStatuses = ['Pending', 'Completed', 'Cancelled'];
     private OrderItemModel $orderItems;
+
+    private array $categories = [
+        'coffee-series'     => 'Coffee Series',
+        'non-coffee'        => 'Non-Coffee',
+        'milktea'           => 'Milktea',
+        'coffee-frappes'    => 'Coffee Frappes',
+        'matcha-series'     => 'Matcha Series',
+        'fruitmilk-series'  => 'Fruitmilk Series',
+        'yakult-series'     => 'Yakult Series',
+        'coke-float'        => 'Coke Float',
+        'hot-coffee'        => 'Hot Coffee',
+        'fruit-soda-series' => 'Fruit Soda Series',
+        'snacks-series'     => 'Snacks Series',
+    ];
 
     public function __construct()
     {
@@ -24,13 +39,20 @@ class Orders extends BaseController
         $orders = $model->orderBy('order_date', 'DESC')->findAll();
         $orders = $model->attachItems($orders);
 
+        $productModel = new ProductModel();
+        $products = $productModel->where('status', 'Available')->findAll();
+
         $data = [
-            'pendingOrders'   => array_values(array_filter($orders, static fn ($order) => $order['status'] !== 'Completed')),
+            'pendingOrders'   => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Pending')),
             'completedOrders' => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Completed')),
+            'cancelledOrders' => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Cancelled')),
+            'categories'      => $this->categories,
+            'products'        => $products,
             'stats' => [
                 'todayOrders' => $model->countOrdersByDate(),
                 'pending'     => $model->countOrdersByStatus('Pending'),
                 'completed'   => $model->countOrdersByStatus('Completed'),
+                'cancelled'   => $model->countOrdersByStatus('Cancelled'),
             ],
         ];
 
@@ -132,15 +154,24 @@ class Orders extends BaseController
             $name = trim($item['name'] ?? '');
             $price = isset($item['price']) ? (float) $item['price'] : 0;
             $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+            $size = trim($item['size'] ?? 'Small');
 
+            // Skip if product is not selected or required fields are missing
             if ($name === '' || $price <= 0 || $quantity <= 0) {
                 continue;
             }
 
+            // Append size to name if not Small
+            $itemName = $name;
+            if ($size !== 'Small') {
+                $itemName = $name . ' (' . $size . ')';
+            }
+
             $normalized[] = [
-                'name'     => $name,
+                'name'     => $itemName,
                 'price'    => round($price, 2),
                 'quantity' => $quantity,
+                'size'     => $size,
             ];
         }
 
