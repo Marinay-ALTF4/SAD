@@ -19,8 +19,8 @@
     <a href="<?= base_url('dashboard') ?>">Dashboard</a>
     <a href="<?= base_url('orders') ?>">Orders</a>
     <a href="<?= base_url('product') ?>">Products</a>
+    <a href="<?= base_url('expenses') ?>">Expenses</a>
     <?php if (session()->get('role') === 'admin'): ?>
-        <a href="<?= base_url('expenses') ?>">Expenses</a>
         <a href="<?= base_url('reports') ?>" class="active">Reports</a>
         <a href="<?= base_url('settings') ?>">Settings</a>
     <?php endif; ?>
@@ -28,7 +28,12 @@
 </div>
 
 <div class="content">
-    <h2 class="title mb-4">Performance Reports</h2>
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+        <h2 class="title mb-0">Performance Reports</h2>
+        <button class="btn btn-outline-dark shadow-sm px-3 py-2 fw-semibold print-hidden" style="font-size: 0.95rem;" onclick="window.print()">
+            Print Report
+        </button>
+    </div>
 
     <!-- Sales Summary -->
     <div class="row g-4 mb-4">
@@ -62,14 +67,14 @@
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="card-custom text-center p-4">
-                <p class="text-muted mb-1 text-uppercase small">Pending Orders</p>
-                <h3><?= number_format($pending_orders ?? 0) ?></h3>
+                <p class="text-muted mb-1 text-uppercase small">Completed Orders</p>
+                <h3><?= number_format($completed_orders ?? 0) ?></h3>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="card-custom text-center p-4">
-                <p class="text-muted mb-1 text-uppercase small">Completed Orders</p>
-                <h3><?= number_format($completed_orders ?? 0) ?></h3>
+                <p class="text-muted mb-1 text-uppercase small">Cancelled Orders</p>
+                <h3><?= number_format($cancelled_orders ?? 0) ?></h3>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -80,8 +85,8 @@
         </div>
     </div>
 
-    <!-- Charts -->
-    <div class="row g-4 mb-4">
+    <!-- Charts (print on next page) -->
+    <div class="row g-4 mb-4 print-break">
         <div class="col-lg-6">
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -102,71 +107,7 @@
         </div>
     </div>
 
-    <!-- Tables & Recommendation -->
-    <div class="row g-4">
-        <div class="col-lg-6">
-            <div class="card-custom p-4 h-100">
-                <h5 class="mb-3">Top Menu Items</h5>
-                <div class="table-responsive">
-                    <table class="table table-borderless align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th class="text-end">Qty Sold</th>
-                                <th class="text-end">Revenue</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($topItems)): ?>
-                                <tr><td colspan="3" class="text-center text-muted">No completed orders yet.</td></tr>
-                            <?php else: ?>
-                                <?php foreach ($topItems as $item): ?>
-                                    <tr>
-                                        <td><?= esc($item['name']) ?></td>
-                                        <td class="text-end"><?= number_format($item['quantity']) ?></td>
-                                        <td class="text-end">₱<?= number_format($item['revenue'], 2) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card-custom p-4 h-100">
-                <h5 class="mb-3">Recent Orders</h5>
-                <div class="table-responsive">
-                    <table class="table table-sm align-middle">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Customer</th>
-                                <th>Status</th>
-                                <th class="text-end">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($recentOrders)): ?>
-                                <tr><td colspan="4" class="text-center text-muted">No orders yet.</td></tr>
-                            <?php else: ?>
-                                <?php foreach ($recentOrders as $order): ?>
-                                    <tr>
-                                        <td><?= esc($order['id']) ?></td>
-                                        <td><?= esc($order['customer_name']) ?></td>
-                                        <td><span class="badge <?= $order['status'] === 'Completed' ? 'bg-success' : ($order['status'] === 'Pending' ? 'bg-warning text-dark' : 'bg-danger') ?>"><?= esc($order['status']) ?></span></td>
-                                        <td class="text-end">₱<?= number_format($order['total'], 2) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    
-        </div>
-    </div>
+    <!-- Recommendation space intentionally left minimal after removing tables -->
 </div>
 
 <script>
@@ -258,6 +199,23 @@ body {
     padding:30px;
 }
 
+/* Print adjustments: hide sidebar and reset content width */
+@media print {
+    .sidebar {
+        display: none !important;
+    }
+    .content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0 10mm !important;
+    }
+    .print-break {
+        page-break-before: always;
+        break-before: page;
+        page-break-inside: avoid;
+    }
+}
+
 .card-custom {
     border-radius: 15px;
     border: 1px solid #d8bfa7;
@@ -268,6 +226,13 @@ body {
 .title {
     color: #5a3825;
     font-weight: 700;
+}
+
+/* Hide controls when printing */
+@media print {
+    .print-hidden {
+        display: none !important;
+    }
 }
 
 .table thead th {

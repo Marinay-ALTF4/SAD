@@ -1,0 +1,23 @@
+# Environment
+.env
+
+# Dependencies
+/vendor/
+
+# OS / Editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Runtime artifacts
+/writable/*
+!/writable/index.html
+/writable/logs/
+/writable/cache/
+/writable/debugbar/
+/writable/session/
+/writable/uploads/
+
+# Generic logs
+*.log

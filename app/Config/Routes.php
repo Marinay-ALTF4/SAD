@@ -38,8 +38,9 @@ $routes->post('/orders/(:num)/delete', 'Orders::delete/$1');
 // Reports Routes (Admin Only)
 $routes->get('/reports', 'Reports::index', ['filter' => ['auth', 'admin']]);
 
-// Expenses Routes (Admin Only)
-$routes->get('/expenses', 'Expenses::index', ['filter' => ['auth', 'admin']]);
+// Expenses Routes
+// Allow all authenticated users to view expenses; keep mutations admin-only for control
+$routes->get('/expenses', 'Expenses::index', ['filter' => ['auth']]);
 $routes->post('/expenses', 'Expenses::store', ['filter' => ['auth', 'admin']]);
 $routes->post('/expenses/(:num)', 'Expenses::update/$1', ['filter' => ['auth', 'admin']]);
 $routes->post('/expenses/(:num)/delete', 'Expenses::delete/$1', ['filter' => ['auth', 'admin']]);

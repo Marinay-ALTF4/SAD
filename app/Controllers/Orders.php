@@ -11,7 +11,7 @@ class Orders extends BaseController
     /**
      * Allowed order statuses
      */
-    private array $validStatuses = ['Pending', 'Completed', 'Cancelled'];
+    private array $validStatuses = ['Completed', 'Cancelled'];
     private OrderItemModel $orderItems;
 
     private array $categories = [
@@ -43,14 +43,12 @@ class Orders extends BaseController
         $products = $productModel->where('status', 'Available')->findAll();
 
         $data = [
-            'pendingOrders'   => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Pending')),
             'completedOrders' => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Completed')),
             'cancelledOrders' => array_values(array_filter($orders, static fn ($order) => $order['status'] === 'Cancelled')),
             'categories'      => $this->categories,
             'products'        => $products,
             'stats' => [
                 'todayOrders' => $model->countOrdersByDate(),
-                'pending'     => $model->countOrdersByStatus('Pending'),
                 'completed'   => $model->countOrdersByStatus('Completed'),
                 'cancelled'   => $model->countOrdersByStatus('Cancelled'),
             ],
@@ -189,7 +187,7 @@ class Orders extends BaseController
 
     private function sanitizeStatus(?string $status): string
     {
-        return in_array($status, $this->validStatuses, true) ? $status : 'Pending';
+        return in_array($status, $this->validStatuses, true) ? $status : 'Completed';
     }
 
     private function normalizeCustomerName(?string $name): string

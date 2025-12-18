@@ -67,16 +67,14 @@
         }
     }
 
-    $pendingOrders   = $pendingOrders ?? [];
     $completedOrders = $completedOrders ?? [];
     $cancelledOrders = $cancelledOrders ?? [];
     $categories      = $categories ?? [];
     $products        = $products ?? [];
     $stats = array_merge([
-        'todayOrders' => 0,
-        'pending'     => 0,
-        'completed'   => 0,
-        'cancelled'   => 0,
+      'todayOrders' => 0,
+      'completed'   => 0,
+      'cancelled'   => 0,
     ], $stats ?? []);
 ?>
 
@@ -86,8 +84,8 @@
     <a href="<?= base_url('dashboard') ?>">Dashboard</a>
     <a href="<?= base_url('orders') ?>" class="active">Orders</a>
     <a href="<?= base_url('product') ?>">Products</a>
+    <a href="<?= base_url('expenses') ?>">Expenses</a>
     <?php if (session()->get('role') === 'admin'): ?>
-      <a href="<?= base_url('expenses') ?>">Expenses</a>
       <a href="<?= base_url('reports') ?>">Reports</a>
       <a href="<?= base_url('settings') ?>">Settings</a>
     <?php endif; ?>
@@ -112,99 +110,23 @@
 
     <!-- Summary Cards -->
     <div class="row g-4 mb-4">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="card-custom p-4 text-center">
           <h5>Today's Orders</h5>
           <h2 class="title"><?= number_format($stats['todayOrders']) ?></h2>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card-custom p-4 text-center">
-          <h5>Pending Orders</h5>
-          <h2 class="title"><?= number_format($stats['pending']) ?></h2>
-        </div>
-      </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="card-custom p-4 text-center">
           <h5>Completed Orders</h5>
           <h2 class="title"><?= number_format($stats['completed']) ?></h2>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="card-custom p-4 text-center">
           <h5>Cancelled Orders</h5>
           <h2 class="title"><?= number_format($stats['cancelled']) ?></h2>
         </div>
-      </div>
-    </div>
-
-    <!-- Pending Orders -->
-    <div class="card-custom p-4 mb-4">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h4 class="title mb-0">Pending Orders</h4>
-       
-      </div>
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
-          <thead class="table-light">
-            <tr>
-              <th>ID</th>
-              <th>Customer</th>
-              <th>Order Items</th>
-              <th>Cup Size</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Order Date</th>
-              <th width="230">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if (empty($pendingOrders)): ?>
-              <tr>
-                <td colspan="8" class="text-center text-muted">No pending orders.</td>
-              </tr>
-            <?php else: ?>
-              <?php foreach ($pendingOrders as $order): ?>
-                <tr>
-                  <td><?= esc($order['id']) ?></td>
-                  <td><?= esc($order['customer_name']) ?></td>
-                  <td><?= esc(renderOrderItems($order['items'])) ?></td>
-                  <td><?= esc(renderOrderSizes($order['items'])) ?></td>
-                  <td>₱<?= number_format($order['total'], 2) ?></td>
-                  <td width="170">
-                    <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
-                      <?= csrf_field() ?>
-                      <select name="status" class="form-select form-select-sm status-select" onchange="this.form.submit()">
-                        <?php foreach (['Pending','Completed','Cancelled'] as $status): ?>
-                          <option value="<?= $status ?>" <?= $status === $order['status'] ? 'selected' : '' ?>>
-                            <?= $status ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </form>
-                  </td>
-                  <td><?= date('M d, Y g:i A', strtotime($order['order_date'])) ?></td>
-                  <td class="text-center">
-                    <div class="d-flex flex-wrap gap-2 justify-content-center">
-                      <button class="btn btn-sm btn-info text-white order-view-trigger" data-bs-toggle="modal" data-bs-target="#viewModal"
-                              data-order='<?= json_encode($order, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
-                        View
-                      </button>
-                      <button class="btn btn-sm btn-warning text-dark order-modal-trigger" data-bs-toggle="modal" data-bs-target="#orderModal"
-                              data-order='<?= json_encode($order, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
-                        Edit
-                      </button>
-                      <form method="post" action="<?= base_url('orders/' . $order['id'] . '/delete') ?>" onsubmit="return confirm('Delete this order?');">
-                        <?= csrf_field() ?>
-                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            <?php endif; ?>
-          </tbody>
-        </table>
       </div>
     </div>
 
@@ -245,7 +167,7 @@
                     <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
                       <?= csrf_field() ?>
                       <select name="status" class="form-select form-select-sm status-select" onchange="this.form.submit()">
-                        <?php foreach (['Completed','Pending','Cancelled'] as $status): ?>
+                        <?php foreach (['Completed','Cancelled'] as $status): ?>
                           <option value="<?= $status ?>" <?= $status === $order['status'] ? 'selected' : '' ?>>
                             <?= $status ?>
                           </option>
@@ -315,7 +237,7 @@
                     <form method="post" action="<?= base_url('orders/' . $order['id'] . '/status') ?>">
                       <?= csrf_field() ?>
                       <select name="status" class="form-select form-select-sm status-select" onchange="this.form.submit()">
-                        <?php foreach (['Cancelled','Pending','Completed'] as $status): ?>
+                        <?php foreach (['Cancelled','Completed'] as $status): ?>
                           <option value="<?= $status ?>" <?= $status === $order['status'] ? 'selected' : '' ?>>
                             <?= $status ?>
                           </option>
@@ -352,47 +274,45 @@
 
   <!-- Create/Edit Order Modal -->
   <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable order-modal">
       <div class="modal-content">
         <form id="orderForm" method="post" action="<?= base_url('orders') ?>">
           <?= csrf_field() ?>
           <div class="modal-header">
-            <h5 class="modal-title">Create Order</h5>
+            <h5 class="modal-title mb-0">Create Order</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Customer (optional)</label>
-              <input type="text" class="form-control" name="customer_name" placeholder="Walk-in Customer">
-            </div>
-
-            <div class="mb-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <label class="form-label mb-0">Order Items</label>
+          <div class="modal-body py-3">
+            <div class="row g-3 mb-3">
+              <div class="col-lg-6">
+                <label class="form-label">Customer (optional)</label>
+                <input type="text" class="form-control" name="customer_name" placeholder="Walk-in Customer">
+              </div>
+              <div class="col-lg-6 d-flex align-items-end justify-content-end">
                 <button type="button" class="btn btn-sm btn-outline-primary" id="addItemBtn">+ Add Item</button>
               </div>
-              <div class="table-responsive">
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th width="20%">Category</th>
-                      <th width="25%">Product</th>
-                      <th width="15%">Cup Size</th>
-                      <th width="12%">Price</th>
-                      <th width="12%">Qty</th>
-                      <th width="10%"></th>
-                    </tr>
-                  </thead>
-                  <tbody id="itemsBody"></tbody>
-                </table>
-              </div>
             </div>
 
-            <div class="row g-3">
+            <div class="table-responsive mb-3">
+              <table class="table table-sm align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th width="20%">Category</th>
+                    <th width="25%">Product</th>
+                    <th width="15%">Cup Size</th>
+                    <th width="12%">Price</th>
+                    <th width="12%">Qty</th>
+                    <th width="10%" class="text-center">Remove</th>
+                  </tr>
+                </thead>
+                <tbody id="itemsBody"></tbody>
+              </table>
+            </div>
+
+            <div class="row g-3 align-items-center mb-2">
               <div class="col-md-6">
                 <label class="form-label">Status</label>
                 <select name="status" class="form-select">
-                  <option value="Pending">Pending</option>
                   <option value="Completed">Completed</option>
                   <option value="Cancelled">Cancelled</option>
                 </select>
@@ -403,7 +323,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer pt-2 pb-3">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-primary btn-primary-custom">Save Order</button>
           </div>
@@ -452,7 +372,6 @@
     const viewModal = new bootstrap.Modal(viewModalElement);
 
     const statusBadgeClass = {
-      Pending: 'bg-warning text-dark',
       Completed: 'bg-success',
       Cancelled: 'bg-danger'
     };
@@ -806,11 +725,55 @@ body {
 
 .badge { font-size: 0.9rem; }
 
+/* Improve readability of order tables */
+.card-custom .table {
+  font-size: 1.05rem;
+}
+
+.card-custom .badge {
+  font-size: 0.95rem;
+  padding: 0.45em 0.6em;
+}
+
 .table-responsive {
   max-height: 500px;
 }
 
 .modal .table td {
   vertical-align: middle;
+}
+
+/* Slightly larger primary action in the order modal */
+.modal .btn-primary-custom {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Make the order modal taller while keeping it scrollable */
+.order-modal .modal-content {
+  max-height: 85vh;
+}
+
+.order-modal .modal-body {
+  max-height: calc(80vh - 140px);
+  overflow-y: auto;
+}
+
+.order-modal select,
+.order-modal input,
+.order-modal .form-control,
+.order-modal .form-select {
+  font-size: 1.2rem;
+}
+
+.order-modal .form-label {
+  font-weight: 600;
+}
+
+.order-modal table thead th {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 </style>

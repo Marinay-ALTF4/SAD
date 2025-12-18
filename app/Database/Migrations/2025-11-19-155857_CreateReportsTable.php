@@ -27,8 +27,8 @@ class CreateReportsTable extends Migration
             ],
             'status'       => [
                 'type'       => 'ENUM',
-                'constraint' => ['Pending', 'Completed', 'Cancelled'],
-                'default'    => 'Pending',
+                'constraint' => ['Completed', 'Cancelled'],
+                'default'    => 'Completed',
             ],
             'order_date'   => [
                 'type' => 'DATETIME',

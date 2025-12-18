@@ -24,11 +24,6 @@ class Expenses extends BaseController
 
     public function index()
     {
-        // Check if user is admin
-        if (session()->get('role') !== 'admin') {
-            return redirect()->to('/dashboard')->with('error', 'Access denied. This page is only available for administrators.');
-        }
-
         $records = $this->expenses->orderBy('date', 'DESC')->findAll();
         $total   = array_reduce($records, static fn ($carry, $row) => $carry + (float) $row['amount'], 0);
 

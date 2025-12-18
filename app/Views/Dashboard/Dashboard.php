@@ -72,6 +72,7 @@
     $totalOrders  = $totalOrders ?? 0;
     $newCustomers = $newCustomers ?? 0;
     $recentOrders = $recentOrders ?? [];
+    $topItems     = $topItems ?? [];
 ?>
 
     <!-- Sidebar -->
@@ -80,8 +81,8 @@
         <a href="<?= base_url('dashboard') ?>" class="active">Dashboard</a>
         <a href="<?= base_url('orders') ?>">Orders</a>
         <a href="<?= base_url('product') ?>">Products</a>
+        <a href="<?= base_url('expenses') ?>">Expenses</a>
         <?php if (session()->get('role') === 'admin'): ?>
-            <a href="<?= base_url('expenses') ?>">Expenses</a>
             <a href="<?= base_url('reports') ?>">Reports</a>
             <a href="<?= base_url('settings') ?>">Settings</a>
         <?php endif; ?>
@@ -115,47 +116,80 @@
             </div>
         </div>
 
-        <div class="mt-5 card-custom p-4">
-            <h4 class="title mb-3">Recent Orders</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Customer</th>
-                        <th>Order</th>
-                        <th>Cup Size</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($recentOrders)): ?>
-                        <tr>
-                            <td colspan="6" class="text-center">No recent orders yet.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($recentOrders as $order): ?>
-                            <tr>
-                                <td><?= esc($order['id']) ?></td>
-                                <td><?= esc($order['customer_name']) ?></td>
-                                <td><?= esc(renderOrderItems($order['items'])) ?></td>
-                                <td><?= esc(renderOrderSizes($order['items'])) ?></td>
-                                <td>₱<?= number_format($order['total'], 2) ?></td>
-                                <td>
-                                    <?php
-                                        $badge = [
-                                            'Pending'   => 'bg-warning text-dark',
-                                            'Completed' => 'bg-success',
-                                            'Cancelled' => 'bg-danger',
-                                        ][ $order['status'] ] ?? 'bg-secondary';
-                                    ?>
-                                    <span class="badge <?= $badge ?>"><?= esc($order['status']) ?></span>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+        <div class="row g-4 mt-4">
+            <div class="col-lg-6">
+                <div class="card-custom p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h4 class="title mb-0">Top Menu Items</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Item</th>
+                                    <th class="text-end">Qty Sold</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($topItems)): ?>
+                                    <tr><td colspan="3" class="text-center text-muted py-4">No completed orders yet.</td></tr>
+                                <?php else: ?>
+                                    <?php foreach ($topItems as $item): ?>
+                                        <tr>
+                                            <td><?= esc($item['name']) ?></td>
+                                            <td class="text-end fw-semibold"><?= number_format($item['quantity']) ?></td>
+                                            <td class="text-end fw-semibold">₱<?= number_format($item['revenue'], 2) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card-custom p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h4 class="title mb-0">Recent Orders</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($recentOrders)): ?>
+                                    <tr><td colspan="4" class="text-center text-muted py-4">No recent orders yet.</td></tr>
+                                <?php else: ?>
+                                    <?php foreach ($recentOrders as $order): ?>
+                                        <tr>
+                                            <td><?= esc($order['id']) ?></td>
+                                            <td><?= esc($order['customer_name']) ?></td>
+                                            <td>
+                                                <?php
+                                                    $badge = [
+                                                        'Completed' => 'bg-success',
+                                                        'Cancelled' => 'bg-danger',
+                                                    ][$order['status']] ?? 'bg-secondary';
+                                                ?>
+                                                <span class="badge <?= $badge ?>"><?= esc($order['status']) ?></span>
+                                            </td>
+                                            <td class="text-end">₱<?= number_format($order['total'], 2) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -227,6 +261,16 @@
     .title {
         color: #5a3825;
         font-weight: 700;
+    }
+
+    /* Improve readability of dashboard tables */
+    .card-custom .table {
+        font-size: 1.05rem;
+    }
+
+    .card-custom .badge {
+        font-size: 0.95rem;
+        padding: 0.45em 0.6em;
     }
     
 </style>

@@ -15,6 +15,7 @@ class Home extends BaseController
             'totalOrders'  => $orders->countAll(),
             'newCustomers' => $orders->countNewCustomersByDate(),
             'recentOrders' => $orders->getRecentOrders(),
+            'topItems'     => $orders->getTopItems(5),
         ];
 
         return view('Dashboard/Dashboard', $data);
